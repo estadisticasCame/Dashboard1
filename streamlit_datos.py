@@ -99,7 +99,7 @@ if aux_contra == True :
     st.write("---")
 
     # PROGRAMA
-    programa = '<div style="background-color: blue; color: white; padding: 10px; text-align: center;"><h2>Cantidad de cálculos por programa</h2></div>'
+    programa = '<div style=padding: 10px; text-align: center;"><h2>Cantidad de cálculos por programa</h2></div>'
     st.markdown(programa, unsafe_allow_html=True)
     calculos_por_programa = lista_tablas[1].to_html(index=False, escape=False)
     calculos_por_programa = calculos_por_programa.replace('<table border="1" class="dataframe">',
