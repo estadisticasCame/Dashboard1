@@ -112,7 +112,7 @@ if aux_contra == True :
 
     # TIPO DE INSCRIPCION
     calculos_inscripcion = '<div style=text-align: center;"><h2>Cantidad de cálculos por tipo de inscripción</h2></div>'
-    st.markdown(calculos_inscripcion, unsafe_allow_html=True)
+    st.header(calculos_inscripcion, unsafe_allow_html=True)
     calculos_por_tipo_inscripcion = lista_tablas[2].to_html(index=False, escape = False)
     calculos_por_tipo_inscripcion = calculos_por_tipo_inscripcion.replace('<table border="1" class="dataframe">',
                                     '<table style="width: 100%; text-align: center;" border="1" class="dataframe">')
