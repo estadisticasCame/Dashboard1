@@ -95,7 +95,7 @@ if aux_contra == True :
     calculos_por_programa = lista_tablas[1].to_html(index=False, escape=False)
     calculos_por_programa = calculos_por_programa.replace('<table border="1" class="dataframe">',
                                     '<table style="width: 100%; text-align: center;" border="1" class="dataframe">')
-    calculos_por_programa = calculos_por_programa.replace('<th>', '<th style="text-align: center;">')
+    calculos_por_programa = calculos_por_programa.replace('<th>', '<th style="text-align: center; background-color: blue; color: white;">')
     
     # Mostrar la tabla en Streamlit
     st.write(calculos_por_programa, unsafe_allow_html=True)
