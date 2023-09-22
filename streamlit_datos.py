@@ -70,22 +70,6 @@ if aux_contra == True :
         tabla['%'] = tabla['%'].apply(lambda x: f'{x:.2f}%')
         lista_tablas.append(tabla)
     
-
-    col1, col2 = st.columns(2)
-    with col1:
-        total_calculos = df.shape[0]
-        st.write(f"+ Cálculos totales: **{total_calculos}**")
-
-    with col2:
-        # Convertir la columna 'Fecha' al formato de fecha adecuado
-        df['Fecha'] = pd.to_datetime(df['Fecha'], format='%d/%m/%y')
-        # Agrupar por día y contar la cantidad de filas en cada grupo
-        promedio_cantidad_calculos_por_dia = df.groupby(df['Fecha'].dt.date).size().mean()
-        promedio_cantidad_calculos_por_dia = round(promedio_cantidad_calculos_por_dia,0)
-        st.write(f"+ Promedio de cantidad cálculos por dia: **{promedio_cantidad_calculos_por_dia}**")
-
-    st.write("---")
-
     # DESCARGAR DATOS EN EXCEL
 
     def generar_excel():
@@ -99,6 +83,22 @@ if aux_contra == True :
     if st.button('Descargar datos en Excel'):
         generar_excel()
         st.success('Excel descargado')
+
+    st.write("---")
+
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        total_calculos = df.shape[0]
+        st.write(f"+ Cálculos totales: **{total_calculos}**")
+
+    with col2:
+        # Convertir la columna 'Fecha' al formato de fecha adecuado
+        df['Fecha'] = pd.to_datetime(df['Fecha'], format='%d/%m/%y')
+        # Agrupar por día y contar la cantidad de filas en cada grupo
+        promedio_cantidad_calculos_por_dia = df.groupby(df['Fecha'].dt.date).size().mean()
+        promedio_cantidad_calculos_por_dia = round(promedio_cantidad_calculos_por_dia,0)
+        st.write(f"+ Promedio de cantidad cálculos por dia: **{promedio_cantidad_calculos_por_dia}**")
 
     st.write("---")
 
