@@ -86,49 +86,43 @@ if aux_contra == True :
 
     st.write("---")
 
-    st.write("Cálculos por provincia")
-    calculos_por_provincia = lista_tablas[0].to_html(index=False)
+    # PROVINCIA
+    provincia = '<div style="background-color: blue; color: white; padding: 10px; text-align: center;"><h2>Cantidad de cálculos por provincia</h2></div>'
+    st.markdown(provincia, unsafe_allow_html=True)
+    calculos_por_provincia = lista_tablas[0].to_html(index=False, escape = False)
+    calculos_por_provincia = calculos_por_provincia.replace('<table border="1" class="dataframe">',
+                                    '<table style="width: 100%; text-align: center;" border="1" class="dataframe">')
+    calculos_por_provincia = calculos_por_provincia.replace('<th>', '<th style="text-align: center; background-color: blue; color: white;">')
+    calculos_por_provincia = calculos_por_provincia.replace('<tr>\n      <td>Total</td>\n      <td>1908</td>\n      <td>100.00</td>\n    </tr>',
+                                    '<tr>\n      <td style="text-align: center; font-weight: bold;">Total</td>\n      <td style="text-align: center; font-weight: bold;">1908</td>\n      <td style="text-align: center; font-weight: bold;">100.00</td>\n    </tr>')
     st.write(calculos_por_provincia, unsafe_allow_html=True)
     st.write("---")
 
-    st.write("Cálculos por programa")
+    # PROGRAMA
+    programa = '<div style="background-color: blue; color: white; padding: 10px; text-align: center;"><h2>Cantidad de cálculos por programa</h2></div>'
+    st.markdown(programa, unsafe_allow_html=True)
     calculos_por_programa = lista_tablas[1].to_html(index=False, escape=False)
     calculos_por_programa = calculos_por_programa.replace('<table border="1" class="dataframe">',
                                     '<table style="width: 100%; text-align: center;" border="1" class="dataframe">')
     calculos_por_programa = calculos_por_programa.replace('<th>', '<th style="text-align: center; background-color: blue; color: white;">')
-    
-    # Modificar manualmente la última fila para aplicar estilos
     calculos_por_programa = calculos_por_programa.replace('<tr>\n      <td>Total</td>\n      <td>1908</td>\n      <td>100.00</td>\n    </tr>',
-                                    '<tr style="background-color: #FFE4B5; font-weight: bold;">\n      <td style="text-align: center;">Total</td>\n      <td style="text-align: center;">1908</td>\n      <td style="text-align: center;">100.00</td>\n    </tr>')
-    
-    # Mostrar la tabla en Streamlit
+                                    '<tr>\n      <td style="text-align: center; font-weight: bold;">Total</td>\n      <td style="text-align: center; font-weight: bold;">1908</td>\n      <td style="text-align: center; font-weight: bold;">100.00</td>\n    </tr>')
     st.write(calculos_por_programa, unsafe_allow_html=True)
     st.write("---")
 
-    st.write("Cálculos por tipo de inscripción")
-    calculos_por_tipo_inscripcion = lista_tablas[2].to_html(index=False)
+    # TIPO DE INSCRIPCION
+    calculos_inscripcion = '<div style="background-color: blue; color: white; padding: 10px; text-align: center;"><h2>Cantidad de cálculos por tipo de inscripción</h2></div>'
+    st.markdown(calculos_inscripcion, unsafe_allow_html=True)
+    calculos_por_tipo_inscripcion = lista_tablas[2].to_html(index=False, escape = False)
+    calculos_por_tipo_inscripcion = calculos_por_tipo_inscripcion.replace('<table border="1" class="dataframe">',
+                                    '<table style="width: 100%; text-align: center;" border="1" class="dataframe">')
+    calculos_por_tipo_inscripcion = calculos_por_tipo_inscripcion.replace('<th>', '<th style="text-align: center; background-color: blue; color: white;">')
+    calculos_por_tipo_inscripcion = calculos_por_tipo_inscripcion.replace('<tr>\n      <td>Total</td>\n      <td>1908</td>\n      <td>100.00</td>\n    </tr>',
+                                    '<tr>\n      <td style="text-align: center; font-weight: bold;">Total</td>\n      <td style="text-align: center; font-weight: bold;">1908</td>\n      <td style="text-align: center; font-weight: bold;">100.00</td>\n    </tr>')
     st.write(calculos_por_tipo_inscripcion, unsafe_allow_html=True)
     st.write("---")
 
-    st.write("Base")
+    # BASE
+    base = '<div style="background-color: blue; color: white; padding: 10px; text-align: center;"><h2>Base</h2></div>'
+    st.markdown(base, unsafe_allow_html=True)
     st.dataframe(df)
-
-    # Crear un DataFrame de ejemplo
-    data = {'Tipo de inscripcion': ['Responsable Inscripto', 'Monotributista', 'Sociedad', 'Total'],
-            'N': [1273, 476, 159, 1908],
-            '%': [66.72, 24.95, 8.33, 100.00]}
-    
-    df = pd.DataFrame(data)
-    
-    # Convertir el DataFrame a una representación HTML con estilos personalizados para centrar contenido y estilizar el encabezado
-    tabla_html = df.to_html(index=False, escape=False)
-    tabla_html = tabla_html.replace('<table border="1" class="dataframe">',
-                                    '<table style="width: 100%; text-align: center;" border="1" class="dataframe">')
-    tabla_html = tabla_html.replace('<th>', '<th style="text-align: center; background-color: blue; color: white;">')
-    
-    # Modificar manualmente la última fila para aplicar negritas
-    tabla_html = tabla_html.replace('<tr>\n      <td>Total</td>\n      <td>1908</td>\n      <td>100.00</td>\n    </tr>',
-                                    '<tr>\n      <td style="text-align: center; font-weight: bold;">Total</td>\n      <td style="text-align: center; font-weight: bold;">1908</td>\n      <td style="text-align: center; font-weight: bold;">100.00</td>\n    </tr>')
-    
-    # Mostrar la tabla en Streamlit
-    st.write(tabla_html, unsafe_allow_html=True)
