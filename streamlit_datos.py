@@ -74,7 +74,7 @@ if aux_contra == True :
     col1, col2 = st.columns(2)
     with col1:
         total_calculos = df.shape[0]
-        st.write(f"Cálculos totales: {total_calculos}")
+        st.markdown(f"Cálculos totales: {total_calculos}")
 
     with col2:
         # Convertir la columna 'Fecha' al formato de fecha adecuado
@@ -82,7 +82,7 @@ if aux_contra == True :
         # Agrupar por día y contar la cantidad de filas en cada grupo
         promedio_cantidad_calculos_por_dia = df.groupby(df['Fecha'].dt.date).size().mean()
         promedio_cantidad_calculos_por_dia = round(promedio_cantidad_calculos_por_dia,0)
-        st.write(f"Promedio de cantidad cálculos por dia: {promedio_cantidad_calculos_por_dia}")
+        st.markdown(f"Promedio de cantidad cálculos por dia: {promedio_cantidad_calculos_por_dia}")
 
     st.write("---")
 
@@ -99,7 +99,7 @@ if aux_contra == True :
     st.write("---")
 
     # PROGRAMA
-    programa = '<div style=padding: 10px; text-align: center;"><h2>Cantidad de cálculos por programa</h2></div>'
+    programa = '<div style=text-align: center;"><h2>Cantidad de cálculos por programa</h2></div>'
     st.markdown(programa, unsafe_allow_html=True)
     calculos_por_programa = lista_tablas[1].to_html(index=False, escape=False)
     calculos_por_programa = calculos_por_programa.replace('<table border="1" class="dataframe">',
@@ -111,7 +111,7 @@ if aux_contra == True :
     st.write("---")
 
     # TIPO DE INSCRIPCION
-    calculos_inscripcion = '<div style="background-color: blue; color: white; padding: 10px; text-align: center;"><h2>Cantidad de cálculos por tipo de inscripción</h2></div>'
+    calculos_inscripcion = '<div style=text-align: center;"><h2>Cantidad de cálculos por tipo de inscripción</h2></div>'
     st.markdown(calculos_inscripcion, unsafe_allow_html=True)
     calculos_por_tipo_inscripcion = lista_tablas[2].to_html(index=False, escape = False)
     calculos_por_tipo_inscripcion = calculos_por_tipo_inscripcion.replace('<table border="1" class="dataframe">',
@@ -123,6 +123,6 @@ if aux_contra == True :
     st.write("---")
 
     # BASE
-    base = '<div style="background-color: blue; color: white; padding: 8px; text-align: center;"<h2 style="color: white;"><h2>Base</h2></div>'
+    base = '<div style=text-align: center;"<h2 style="color: white;"><h2>Base</h2></div>'
     st.markdown(base, unsafe_allow_html=True)
     st.dataframe(df)
