@@ -5,6 +5,7 @@ from io import BytesIO
 import github
 import io
 
+
 def hide_password_input(input_label):
     password = st.text_input(input_label, type="password", key=input_label)
     return password
@@ -141,8 +142,8 @@ if aux_contra == True :
     calculos_por_tipo_inscripcion = calculos_por_tipo_inscripcion.replace('<table border="1" class="dataframe">',
                                     '<table style="width: 100%; text-align: center;" border="1" class="dataframe">')
     calculos_por_tipo_inscripcion = calculos_por_tipo_inscripcion.replace('<th>', '<th style="text-align: center; background-color: blue; color: white;">')
-    calculos_por_tipo_inscripcion = calculos_por_tipo_inscripcion.replace(f'<tr>\n      <td>Total</td>\n      <td>{str(total_calculos)}</td>\n      <td>100.00%</td>\n    </tr>',
-                                    f'<tr>\n      <td style="text-align: center; font-weight: bold;">Total</td>\n      <td style="text-align: center; font-weight: bold;">19{total_calculos}08</td>\n      <td style="text-align: center; font-weight: bold;">100.00</td>\n    </tr>')
+    calculos_por_tipo_inscripcion = calculos_por_tipo_inscripcion.replace(f'<tr>\n      <td>Total</td>\n      <td>{total_calculos}</td>\n      <td>100.00%</td>\n    </tr>',
+                                    f'<tr>\n      <td style="text-align: center; font-weight: bold;">Total</td>\n      <td style="text-align: center; font-weight: bold;">{total_calculos}</td>\n      <td style="text-align: center; font-weight: bold;">100.00</td>\n    </tr>')
     st.write(calculos_por_tipo_inscripcion, unsafe_allow_html=True)
     st.write("---")
 
