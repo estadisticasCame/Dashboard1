@@ -87,8 +87,7 @@ if aux_contra == True :
     st.write("---")
 
     # PROVINCIA
-    provincia = '<div style=text-align: center;"><h2>Cantidad de cálculos por provincia</h2></div>'
-    st.markdown(provincia, unsafe_allow_html=True)
+    st.header("Cantidad de cálculos por provincia")
     calculos_por_provincia = lista_tablas[0].to_html(index=False, escape = False)
     calculos_por_provincia = calculos_por_provincia.replace('<table border="1" class="dataframe">',
                                     '<table style="width: 100%; text-align: center;" border="1" class="dataframe">')
@@ -99,8 +98,7 @@ if aux_contra == True :
     st.write("---")
 
     # PROGRAMA
-    programa = '<div style=text-align: center;"><h2>Cantidad de cálculos por programa</h2></div>'
-    st.header(programa, unsafe_allow_html=True)
+    st.header("Cantidad de cálculos por programa")
     calculos_por_programa = lista_tablas[1].to_html(index=False, escape=False)
     calculos_por_programa = calculos_por_programa.replace('<table border="1" class="dataframe">',
                                     '<table style="width: 100%; text-align: center;" border="1" class="dataframe">')
@@ -111,8 +109,7 @@ if aux_contra == True :
     st.write("---")
 
     # TIPO DE INSCRIPCION
-    calculos_inscripcion = '<div style=text-align: center;"><h2>Cantidad de cálculos por tipo de inscripción</h2></div>'
-    st.header(calculos_inscripcion, unsafe_allow_html=True)
+    st.header("Cantidad de cálculos por tipo de inscripción")
     calculos_por_tipo_inscripcion = lista_tablas[2].to_html(index=False, escape = False)
     calculos_por_tipo_inscripcion = calculos_por_tipo_inscripcion.replace('<table border="1" class="dataframe">',
                                     '<table style="width: 100%; text-align: center;" border="1" class="dataframe">')
@@ -123,6 +120,5 @@ if aux_contra == True :
     st.write("---")
 
     # BASE
-    base = '<div style=text-align: center;"<h2 style="color: white;"><h2>Base</h2></div>'
-    st.markdown(base, unsafe_allow_html=True)
+    st.header("Base")
     st.dataframe(df)
