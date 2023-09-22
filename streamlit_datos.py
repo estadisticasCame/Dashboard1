@@ -84,16 +84,14 @@ if aux_contra == True :
         output.seek(0)
         return output
 
-    if st.button('Descargar datos en Excel'):
-        excel_data = generar_excel()
-        st.success('Excel generado')
+    excel_data = generar_excel()
         
-        # Descargar el archivo desde la memoria
-        st.download_button(
-            label='Descargar archivo Excel',
-            data=excel_data,
-            key='archivo_excel',
-            file_name='datos_calculadora.xlsx',
+    # Descargar el archivo desde la memoria
+    st.download_button(
+        label='Descargar datos en Excel',
+        data=excel_data,
+        key='archivo_excel',
+        file_name='datos_calculadora.xlsx',
         )
 
     st.write("---")
@@ -121,7 +119,7 @@ if aux_contra == True :
     calculos_por_provincia = calculos_por_provincia.replace('<table border="1" class="dataframe">',
                                     '<table style="width: 100%; text-align: center;" border="1" class="dataframe">')
     calculos_por_provincia = calculos_por_provincia.replace('<th>', '<th style="text-align: center; background-color: blue; color: white;">')
-    calculos_por_provincia = calculos_por_provincia.replace(f'<tr>\n      <td>Total</td>\n      <td>{df.iloc[21, 1]}</td>\n      <td>100.00%</td>\n    </tr>',
+    calculos_por_provincia = calculos_por_provincia.replace(f'<tr>\n      <td>Total</td>\n      <td>{total_calculos}</td>\n      <td>100.00%</td>\n    </tr>',
                                     '<tr>\n      <td style="text-align: center; font-weight: bold;">Total</td>\n      <td style="text-align: center; font-weight: bold;">1908</td>\n      <td style="text-align: center; font-weight: bold;">100.00</td>\n    </tr>')
     st.write(calculos_por_provincia, unsafe_allow_html=True)
     st.write("---")
@@ -132,7 +130,7 @@ if aux_contra == True :
     calculos_por_programa = calculos_por_programa.replace('<table border="1" class="dataframe">',
                                     '<table style="width: 100%; text-align: center;" border="1" class="dataframe">')
     calculos_por_programa = calculos_por_programa.replace('<th>', '<th style="text-align: center; background-color: blue; color: white;">')
-    calculos_por_programa = calculos_por_programa.replace(f'<tr>\n      <td>Total</td>\n      <td>{df.iloc[8, 1]}</td>\n      <td>100.00%</td>\n    </tr>',
+    calculos_por_programa = calculos_por_programa.replace(f'<tr>\n      <td>Total</td>\n      <td>{total_calculos}</td>\n      <td>100.00%</td>\n    </tr>',
                                     '<tr>\n      <td style="text-align: center; font-weight: bold;">Total</td>\n      <td style="text-align: center; font-weight: bold;">1908</td>\n      <td style="text-align: center; font-weight: bold;">100.00</td>\n    </tr>')
     st.write(calculos_por_programa, unsafe_allow_html=True)
     st.write("---")
@@ -143,7 +141,7 @@ if aux_contra == True :
     calculos_por_tipo_inscripcion = calculos_por_tipo_inscripcion.replace('<table border="1" class="dataframe">',
                                     '<table style="width: 100%; text-align: center;" border="1" class="dataframe">')
     calculos_por_tipo_inscripcion = calculos_por_tipo_inscripcion.replace('<th>', '<th style="text-align: center; background-color: blue; color: white;">')
-    calculos_por_tipo_inscripcion = calculos_por_tipo_inscripcion.replace(f'<tr>\n      <td>Total</td>\n      <td>{df.iloc[3, 1]}</td>\n      <td>100.00%</td>\n    </tr>',
+    calculos_por_tipo_inscripcion = calculos_por_tipo_inscripcion.replace(f'<tr>\n      <td>Total</td>\n      <td>{str(total_calculos)}</td>\n      <td>100.00%</td>\n    </tr>',
                                     '<tr>\n      <td style="text-align: center; font-weight: bold;">Total</td>\n      <td style="text-align: center; font-weight: bold;">1908</td>\n      <td style="text-align: center; font-weight: bold;">100.00</td>\n    </tr>')
     st.write(calculos_por_tipo_inscripcion, unsafe_allow_html=True)
     st.write("---")
