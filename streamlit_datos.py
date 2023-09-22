@@ -93,8 +93,9 @@ if aux_contra == True :
 
     st.write("Cálculos por programa")
     calculos_por_programa = lista_tablas[1].to_html(index=False, escape=False)
-    calculos_por_programa = calculos_por_programa.replace('<table border="1" class="dataframe">', '<table style="width: 100%;" border="1" class="dataframe">''<th>', '<th style="text-align: center;">')
-    st.write(calculos_por_programa, unsafe_allow_html=True)
+    calculos_por_programa = calculos_por_programa.replace('<th>', '<th style="text-align: center;">')
+    # Mostrar la tabla en Streamlit con un ancho del 100%
+    st.markdown(f'<div style="width: 100%;">{calculos_por_programa}</div>', unsafe_allow_html=True)
     st.write("---")
 
     st.write("Cálculos por tipo de inscripción")
