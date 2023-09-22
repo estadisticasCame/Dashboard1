@@ -37,7 +37,9 @@ if verificar_contraseña(contraseña) == True:
     aux_contra = True
     # Creamos la conexión
 else:
-    st.error('Contraseña no válida.')    
+    st.error('Contraseña no válida.')  
+
+st.write("---")
 
 if not st.session_state.get('autenticado'):
     st.error("Ingrese la contraseña")
@@ -79,6 +81,7 @@ if aux_contra == True :
         df['Fecha'] = pd.to_datetime(df['Fecha'], format='%d/%m/%y')
         # Agrupar por día y contar la cantidad de filas en cada grupo
         promedio_cantidad_calculos_por_dia = df.groupby(df['Fecha'].dt.date).size().mean()
+        promedio_cantidad_calculos_por_dia = round(promedio_cantidad_calculos_por_dia,0)
         st.write(f"Promedio de cantidad cálculos por dia: {promedio_cantidad_calculos_por_dia}")
 
     st.write("---")
@@ -96,4 +99,8 @@ if aux_contra == True :
     st.write("---")
 
     st.write("Base")
-    st.dataframe(df)
+    # Convertir el DataFrame a una representación HTML sin el índice
+    tabla_html = df.to_html(index=False)
+
+    # Mostrar la tabla en Streamlit
+    st.write(tabla_html, unsafe_allow_html=True)
