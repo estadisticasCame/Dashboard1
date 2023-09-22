@@ -18,15 +18,13 @@ def verificar_contraseña(contraseña):
 
 st.write("---")
 
-colA, colB, colC = st.columns(3)
+colA, colB = st.columns([1,2])
 with colA :
     st.image("imgs/CAME-Transparente.png", use_column_width=True, width=600)
 # Imagen común a todas las páginas ya que esta por fuera de las funciones
 with colB : 
     contraseña = hide_password_input("Ingrese la contraseña:")
-    
-with colC :
-    st.write("")    
+       
 
 st.write("---")
 
@@ -35,6 +33,8 @@ if verificar_contraseña(contraseña) == True:
     st.success("Contraseña válida. Acceso concedido.")
     # Establecer el estado de autenticación de la sesión
     st.session_state.autenticado = True
+
+    aux_contra = True
     # Creamos la conexión
 else:
     st.error('Contraseña no válida.')    
@@ -42,6 +42,58 @@ else:
 if not st.session_state.get('autenticado'):
     st.error("Ingrese la contraseña")
     st.stop()      
+
+if aux_contra == True :     
+    # ACCEDEMOS A LOS DATOS EN TIEMPO REAL
+    github_token = st.secrets["TOKEN"] 
+    repo_name = st.secrets["REPO"]
+    file_path = st.secrets["ARCHIVO"]   
+        
+    g = Github(github_token)
+    repo = g.get_repo(repo_name)
+    contents = repo.get_contents(file_path)
+    # Create a file-like object from the decoded content
+    content_bytes = contents.decoded_content
+    content_file = io.BytesIO(content_bytes)
+    # Read the CSV from the file-like object
+    df = pd.read_csv(content_file)   
+
+    # Generamos las tablas
+    columnas = ["Provincia", "Programa", "Tipo de inscripcion" ]
+    lista_tablas = []
+    for elemento in columnas :     
+        tabla = df[elemento].value_counts().reset_index().rename(columns={'count': 'N'})
+        tabla["%"] = (tabla["N"] / tabla["N"].sum())*100
+        tabla.loc[len(tabla)] = ["Total",tabla["N"].sum(),tabla["%"].sum()]
+        tabla['%'] = tabla['%'].apply(lambda x: f'{x:.2f}%')
+        lista_tablas.append(tabla)
     
 
-    
+    col1, col2 = st.columns(2)
+    with col1:
+        total_calculos = df.shape[0]
+        st.write(f"Cálculos totales: {total_calculos}")
+
+    with col2:
+        # Convertir la columna 'Fecha' al formato de fecha adecuado
+        df['Fecha'] = pd.to_datetime(df['Fecha'], format='%d/%m/%y')
+        # Agrupar por día y contar la cantidad de filas en cada grupo
+        promedio_cantidad_calculos_por_dia = df.groupby(df['Fecha'].dt.date).size().mean()
+        st.write(f"Promedio de cantidad cálculos por dia: {promedio_cantidad_calculos_por_dia}")
+
+    st.write("---")
+
+    st.write("Cálculos por provincia")
+    st.dataframe(lista_tablas[0])
+    st.write("---")
+
+    st.write("Cálculos por programa")
+    st.dataframe(lista_tablas[1])
+    st.write("---")
+
+    st.write("Cálculos por tipo de inscripción")
+    st.dataframe(lista_tablas[2])
+    st.write("---")
+
+    st.write("Base")
+    st.dataframe(df)
