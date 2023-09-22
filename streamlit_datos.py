@@ -97,6 +97,10 @@ if aux_contra == True :
                                     '<table style="width: 100%; text-align: center;" border="1" class="dataframe">')
     calculos_por_programa = calculos_por_programa.replace('<th>', '<th style="text-align: center; background-color: blue; color: white;">')
     
+    # Agregar un estilo para la última fila (fila Total)
+    calculos_por_programa = calculos_por_programa.replace('<tr>\n      <td>Total</td>\n      <td>1908</td>\n      <td>100.00</td>\n    </tr>',
+                                    '<tr style="background-color: #F5E1DA;">\n      <td>Total</td>\n      <td>1908</td>\n      <td>100.00</td>\n    </tr>')
+    
     # Mostrar la tabla en Streamlit
     st.write(calculos_por_programa, unsafe_allow_html=True)
     st.write("---")
