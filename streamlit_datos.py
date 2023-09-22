@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 from github import Github
-import io
+from io import BytesIO
 import github
 
 def hide_password_input(input_label):
@@ -74,16 +74,26 @@ if aux_contra == True :
     # DESCARGAR DATOS EN EXCEL
 
     def generar_excel():
-        # Código para crear el archivo Excel
-        with pd.ExcelWriter('datos_calculadora.xlsx', engine='openpyxl') as writer:
+        output = BytesIO()
+        with pd.ExcelWriter(output, engine='openpyxl') as writer:
             df.to_excel(writer, sheet_name='Base', index=False)
             lista_tablas[0].to_excel(writer, sheet_name='Tablas', startrow=1, index=False)
             lista_tablas[1].to_excel(writer, sheet_name='Tablas', startrow=len(lista_tablas[0]) + 6, index=False)
             lista_tablas[2].to_excel(writer, sheet_name='Tablas', startrow=len(lista_tablas[0]) + 8 + len(lista_tablas[1]), index=False)
+        output.seek(0)
+        return output
 
     if st.button('Descargar datos en Excel'):
-        generar_excel()
-        st.success('Excel descargado')
+        excel_data = generar_excel()
+        st.success('Excel generado')
+        
+        # Descargar el archivo desde la memoria
+        st.download_button(
+            label='Descargar archivo Excel',
+            data=excel_data,
+            key='archivo_excel',
+            file_name='datos_calculadora.xlsx',
+        )
 
     st.write("---")
 
@@ -110,7 +120,7 @@ if aux_contra == True :
     calculos_por_provincia = calculos_por_provincia.replace('<table border="1" class="dataframe">',
                                     '<table style="width: 100%; text-align: center;" border="1" class="dataframe">')
     calculos_por_provincia = calculos_por_provincia.replace('<th>', '<th style="text-align: center; background-color: blue; color: white;">')
-    calculos_por_provincia = calculos_por_provincia.replace('<tr>\n      <td>Total</td>\n      <td>1908</td>\n      <td>100.00</td>\n    </tr>',
+    calculos_por_provincia = calculos_por_provincia.replace(f'<tr>\n      <td>Total</td>\n      <td>{df.iloc[21, 1]}</td>\n      <td>100.00%</td>\n    </tr>',
                                     '<tr>\n      <td style="text-align: center; font-weight: bold;">Total</td>\n      <td style="text-align: center; font-weight: bold;">1908</td>\n      <td style="text-align: center; font-weight: bold;">100.00</td>\n    </tr>')
     st.write(calculos_por_provincia, unsafe_allow_html=True)
     st.write("---")
@@ -121,7 +131,7 @@ if aux_contra == True :
     calculos_por_programa = calculos_por_programa.replace('<table border="1" class="dataframe">',
                                     '<table style="width: 100%; text-align: center;" border="1" class="dataframe">')
     calculos_por_programa = calculos_por_programa.replace('<th>', '<th style="text-align: center; background-color: blue; color: white;">')
-    calculos_por_programa = calculos_por_programa.replace('<tr>\n      <td>Total</td>\n      <td>1908</td>\n      <td>100.00</td>\n    </tr>',
+    calculos_por_programa = calculos_por_programa.replace(f'<tr>\n      <td>Total</td>\n      <td>{df.iloc[8, 1]}</td>\n      <td>100.00%</td>\n    </tr>',
                                     '<tr>\n      <td style="text-align: center; font-weight: bold;">Total</td>\n      <td style="text-align: center; font-weight: bold;">1908</td>\n      <td style="text-align: center; font-weight: bold;">100.00</td>\n    </tr>')
     st.write(calculos_por_programa, unsafe_allow_html=True)
     st.write("---")
@@ -132,7 +142,7 @@ if aux_contra == True :
     calculos_por_tipo_inscripcion = calculos_por_tipo_inscripcion.replace('<table border="1" class="dataframe">',
                                     '<table style="width: 100%; text-align: center;" border="1" class="dataframe">')
     calculos_por_tipo_inscripcion = calculos_por_tipo_inscripcion.replace('<th>', '<th style="text-align: center; background-color: blue; color: white;">')
-    calculos_por_tipo_inscripcion = calculos_por_tipo_inscripcion.replace('<tr>\n      <td>Total</td>\n      <td>1908</td>\n      <td>100.00</td>\n    </tr>',
+    calculos_por_tipo_inscripcion = calculos_por_tipo_inscripcion.replace(f'<tr>\n      <td>Total</td>\n      <td>{df.iloc[3, 1]}</td>\n      <td>100.00%</td>\n    </tr>',
                                     '<tr>\n      <td style="text-align: center; font-weight: bold;">Total</td>\n      <td style="text-align: center; font-weight: bold;">1908</td>\n      <td style="text-align: center; font-weight: bold;">100.00</td>\n    </tr>')
     st.write(calculos_por_tipo_inscripcion, unsafe_allow_html=True)
     st.write("---")
