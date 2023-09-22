@@ -123,6 +123,6 @@ if aux_contra == True :
     st.write("---")
 
     # BASE
-    base = '<div style="background-color: blue; color: white; padding: 10px; text-align: center;"><h2>Base</h2></div>'
+    base = '<div style="background-color: blue; color: white; padding: 8px; text-align: center;"<h2 style="color: white;"><h2>Base</h2></div>'
     st.markdown(base, unsafe_allow_html=True)
     st.dataframe(df)
