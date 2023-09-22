@@ -92,7 +92,7 @@ if aux_contra == True :
     st.write("---")
 
     st.write("Cálculos por programa")
-    calculos_por_programa = lista_tablas[1].to_html(index=False)
+    calculos_por_programa = lista_tablas[1].to_html(index=False, escape=False)
     st.write(calculos_por_programa, unsafe_allow_html=True)
     st.write("---")
 
