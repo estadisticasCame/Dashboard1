@@ -70,15 +70,16 @@ if aux_contra == True :
         tabla['%'] = tabla['%'].apply(lambda x: f'{x:.2f}%')
         lista_tablas.append(tabla)
     
+
     # DESCARGAR DATOS EN EXCEL
 
     def generar_excel():
-    # Código para crear el archivo Excel
-    with pd.ExcelWriter('datos_calculadora.xlsx', engine='openpyxl') as writer:
-        df.to_excel(writer, sheet_name='Base', index=False)
-        lista_tablas[0].to_excel(writer, sheet_name='Tablas', startrow=1, index=False)
-        lista_tablas[1].to_excel(writer, sheet_name='Tablas', startrow=len(lista_tablas[0]) + 6, index=False)
-        lista_tablas[2].to_excel(writer, sheet_name='Tablas', startrow=len(lista_tablas[0]) + 8 + len(lista_tablas[1]), index=False)
+        # Código para crear el archivo Excel
+        with pd.ExcelWriter('datos_calculadora.xlsx', engine='openpyxl') as writer:
+            df.to_excel(writer, sheet_name='Base', index=False)
+            lista_tablas[0].to_excel(writer, sheet_name='Tablas', startrow=1, index=False)
+            lista_tablas[1].to_excel(writer, sheet_name='Tablas', startrow=len(lista_tablas[0]) + 6, index=False)
+            lista_tablas[2].to_excel(writer, sheet_name='Tablas', startrow=len(lista_tablas[0]) + 8 + len(lista_tablas[1]), index=False)
 
     if st.button('Descargar datos en Excel'):
         generar_excel()
@@ -86,7 +87,6 @@ if aux_contra == True :
 
     st.write("---")
 
-    
     col1, col2 = st.columns(2)
     with col1:
         total_calculos = df.shape[0]
@@ -101,6 +101,8 @@ if aux_contra == True :
         st.write(f"+ Promedio de cantidad cálculos por dia: **{promedio_cantidad_calculos_por_dia}**")
 
     st.write("---")
+
+
 
     # PROVINCIA
     st.header("Cantidad de cálculos por provincia")
