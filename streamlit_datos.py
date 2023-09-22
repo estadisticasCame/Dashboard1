@@ -100,7 +100,7 @@ if aux_contra == True :
 
     # PROGRAMA
     programa = '<div style=text-align: center;"><h2>Cantidad de cálculos por programa</h2></div>'
-    st.markdown(programa, unsafe_allow_html=True)
+    st.header(programa, unsafe_allow_html=True)
     calculos_por_programa = lista_tablas[1].to_html(index=False, escape=False)
     calculos_por_programa = calculos_por_programa.replace('<table border="1" class="dataframe">',
                                     '<table style="width: 100%; text-align: center;" border="1" class="dataframe">')
