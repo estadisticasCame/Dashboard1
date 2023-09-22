@@ -87,20 +87,19 @@ if aux_contra == True :
     st.write("---")
 
     st.write("Cálculos por provincia")
-    st.dataframe(lista_tablas[0])
+    calculos_por_provincia = lista_tablas[0].to_html(index=False)
+    st.write(calculos_por_provincia, unsafe_allow_html=True)
     st.write("---")
 
     st.write("Cálculos por programa")
-    st.dataframe(lista_tablas[1])
+    calculos_por_programa = lista_tablas[1].to_html(index=False)
+    st.write(calculos_por_programa, unsafe_allow_html=True)
     st.write("---")
 
     st.write("Cálculos por tipo de inscripción")
-    st.dataframe(lista_tablas[2])
+    calculos_por_tipo_inscripcion = lista_tablas[2].to_html(index=False)
+    st.write(calculos_por_tipo_inscripcion, unsafe_allow_html=True)
     st.write("---")
 
     st.write("Base")
-    # Convertir el DataFrame a una representación HTML sin el índice
-    tabla_html = df.to_html(index=False)
-
-    # Mostrar la tabla en Streamlit
-    st.write(tabla_html, unsafe_allow_html=True)
+    st.dataframe(df)
