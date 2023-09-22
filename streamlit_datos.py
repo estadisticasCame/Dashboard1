@@ -74,7 +74,7 @@ if aux_contra == True :
     col1, col2 = st.columns(2)
     with col1:
         total_calculos = df.shape[0]
-        st.markdown(f"Cálculos totales: {total_calculos}")
+        st.header(f"Cálculos totales: {total_calculos}")
 
     with col2:
         # Convertir la columna 'Fecha' al formato de fecha adecuado
@@ -82,7 +82,7 @@ if aux_contra == True :
         # Agrupar por día y contar la cantidad de filas en cada grupo
         promedio_cantidad_calculos_por_dia = df.groupby(df['Fecha'].dt.date).size().mean()
         promedio_cantidad_calculos_por_dia = round(promedio_cantidad_calculos_por_dia,0)
-        st.markdown(f"Promedio de cantidad cálculos por dia: {promedio_cantidad_calculos_por_dia}")
+        st.header(f"Promedio de cantidad cálculos por dia: {promedio_cantidad_calculos_por_dia}")
 
     st.write("---")
 
