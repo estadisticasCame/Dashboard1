@@ -112,3 +112,24 @@ if aux_contra == True :
 
     st.write("Base")
     st.dataframe(df)
+
+
+    # Crear un DataFrame de ejemplo
+    data = {'Tipo de inscripcion': ['Responsable Inscripto', 'Monotributista', 'Sociedad', 'Total'],
+            'N': [1273, 476, 159, 1908],
+            '%': [66.72, 24.95, 8.33, 100.00]}
+    
+    df = pd.DataFrame(data)
+    
+    # Convertir el DataFrame a una representación HTML con estilos personalizados para centrar contenido y estilizar el encabezado
+    tabla_html = df.to_html(index=False, escape=False)
+    tabla_html = tabla_html.replace('<table border="1" class="dataframe">',
+                                    '<table style="width: 100%; text-align: center;" border="1" class="dataframe">')
+    tabla_html = tabla_html.replace('<th>', '<th style="text-align: center; background-color: blue; color: white;">')
+    
+    # Modificar manualmente la última fila para aplicar estilos Markdown
+    tabla_html = tabla_html.replace('<tr>\n      <td>Total</td>\n      <td>1908</td>\n      <td>100.00</td>\n    </tr>',
+                                    '<tr>\n      <td style="text-align: center;" colspan="3">**Total**</td>\n    </tr>')
+    
+    # Mostrar la tabla en Streamlit
+    st.markdown(tabla_html, unsafe_allow_html=True)
