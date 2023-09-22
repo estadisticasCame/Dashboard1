@@ -87,7 +87,7 @@ if aux_contra == True :
     st.write("---")
 
     # PROVINCIA
-    provincia = '<div style=padding: 10px; text-align: center;"><h2>Cantidad de cálculos por provincia</h2></div>'
+    provincia = '<div style=text-align: center;"><h2>Cantidad de cálculos por provincia</h2></div>'
     st.markdown(provincia, unsafe_allow_html=True)
     calculos_por_provincia = lista_tablas[0].to_html(index=False, escape = False)
     calculos_por_provincia = calculos_por_provincia.replace('<table border="1" class="dataframe">',
