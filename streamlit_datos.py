@@ -117,6 +117,7 @@ if aux_contra == True :
     # CALCULOS POR DIA 
     st.header("Cantidad de cálculos por día")
     calculos_por_fecha = df["Fecha"].value_counts().reset_index().rename(columns={'count': 'N'})
+    calculos_por_fecha['Fecha'] = calculos_por_fecha['Fecha'].dt.strftime('%d/%m/%y')
     calculos_por_fecha = calculos_por_fecha.sort_values(by="Fecha",ascending=False)
     calculos_por_fecha = calculos_por_fecha.to_html(index=False, escape = False)
     calculos_por_fecha = calculos_por_fecha.replace('<table border="1" class="dataframe">',
