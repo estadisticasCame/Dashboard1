@@ -41,8 +41,11 @@ if verificar_contraseña(contraseña) == True:
 
     aux_contra = True
     # Creamos la conexión
-else:
+elif verificar_contraseña(contraseña) == False:
     st.error('Contraseña no válida.')  
+
+else:
+    pass
 
 st.write("---")
 
@@ -102,7 +105,7 @@ if aux_contra == True :
     col1, col2 = st.columns(2)
     with col1:
         total_calculos = df.shape[0]
-        st.write(f"+ Cálculos totales: **{total_calculos}**")
+        st.write(f"+ ### Cálculos totales: **{total_calculos}**")
 
     with col2:
         # Convertir la columna 'Fecha' al formato de fecha adecuado
@@ -110,7 +113,7 @@ if aux_contra == True :
         # Agrupar por día y contar la cantidad de filas en cada grupo
         promedio_cantidad_calculos_por_dia = df.groupby(df['Fecha'].dt.date).size().mean()
         promedio_cantidad_calculos_por_dia = round(promedio_cantidad_calculos_por_dia,0)
-        st.write(f"+ Promedio de cantidad cálculos por dia: **{promedio_cantidad_calculos_por_dia}**")
+        st.write(f"+ ### Promedio de cantidad cálculos por dia: **{promedio_cantidad_calculos_por_dia}**")
 
     st.write("---")
 
@@ -162,7 +165,3 @@ if aux_contra == True :
                                     f'<tr>\n      <td style="text-align: center; font-weight: bold;">Total</td>\n      <td style="text-align: center; font-weight: bold;">{total_calculos}</td>\n      <td style="text-align: center; font-weight: bold;">100.00</td>\n    </tr>')
     st.write(calculos_por_tipo_inscripcion, unsafe_allow_html=True)
     st.write("---")
-
-    # BASE
-    st.header("Base")
-    st.dataframe(df)
