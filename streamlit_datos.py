@@ -47,7 +47,7 @@ else:
 st.write("---")
 
 if not st.session_state.get('autenticado'):
-    st.error("Ingrese la contraseña")
+    st.error("")
     st.stop()      
 
 if aux_contra == True :     
