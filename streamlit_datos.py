@@ -147,11 +147,27 @@ if aux_contra == True :
                                     f'<tr>\n      <td style="text-align: center; font-weight: bold;">Total</td>\n      <td style="text-align: center; font-weight: bold;">{total_calculos}</td>\n      <td style="text-align: center; font-weight: bold;">100.00</td>\n    </tr>')
     st.write(calculos_por_fecha, unsafe_allow_html=True)
     st.write("---")
-
-    # GRAFICO DE CALCULOS POR DIA
+    
     # Agrupa los datos por día y cuenta la cantidad de registros en cada día
     conteo_por_dia = df.groupby(df['Fecha'].dt.date)['Fecha'].count()
-    plt.figure(figsize=(12, 6))  # Ajusta el tamaño de la figura
+    
+    # Seleccionar filtro
+    fechas = ["Últimos 5 días", "Últimos 10 días", "Últimos 15 días", "Todos los días"]
+    filtro_seleccionado = st.selectbox("Seleccione el filtro de fecha",fechas) 
+    
+    if filtro_seleccionado == "Últimos 5 días":
+        conteo_por_dia =  conteo_por_dia.tail()
+    elif filtro_seleccionado == "Últimos 10 días":
+        conteo_por_dia =  conteo_por_dia.tail(10)
+    elif filtro_seleccionado == "Últimos 15 días":
+        conteo_por_dia =  conteo_por_dia.tail(15)
+    elif filtro_seleccionado == "Todos los días":
+        conteo_por_dia =  conteo_por_dia
+
+    
+    # GRAFICO DE CALCULOS POR DIA
+
+    plt.figure(figsize=(14, 8))  # Ajusta el tamaño de la figura
     plt.plot(conteo_por_dia.index, conteo_por_dia.values, marker='o', linestyle='-', color='blue', linewidth=4)
     plt.grid(True)
     plt.title('Cantidad de cálculos por Día', fontsize=16)
