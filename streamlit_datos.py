@@ -4,6 +4,9 @@ from github import Github
 from io import BytesIO
 import github
 import io
+import seaborn as sns
+import matplotlib.pyplot as plt
+
 
 # Configuramos la página
 st.set_page_config(
