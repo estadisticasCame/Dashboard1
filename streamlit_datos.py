@@ -119,18 +119,15 @@ if aux_contra == True :
 
     st.write("---")
 
-    col1, col2 = st.columns(2)
-    with col1:
-        total_calculos = df.shape[0]
-        st.write(f"### Cálculos totales: **{total_calculos}**")
+    total_calculos = df.shape[0]
+    st.write(f"### Cálculos totales: **{total_calculos}**")
 
-    with col2:
-        # Convertir la columna 'Fecha' al formato de fecha adecuado
-        df['Fecha'] = pd.to_datetime(df['Fecha'], format='%d/%m/%y')
-        # Agrupar por día y contar la cantidad de filas en cada grupo
-        promedio_cantidad_calculos_por_dia = df.groupby(df['Fecha'].dt.date).size().mean()
-        promedio_cantidad_calculos_por_dia = round(promedio_cantidad_calculos_por_dia,0)
-        st.write(f"### Promedio de cantidad cálculos por dia: **{promedio_cantidad_calculos_por_dia}**")
+    # Convertir la columna 'Fecha' al formato de fecha adecuado
+    df['Fecha'] = pd.to_datetime(df['Fecha'], format='%d/%m/%y')
+    # Agrupar por día y contar la cantidad de filas en cada grupo
+    promedio_cantidad_calculos_por_dia = df.groupby(df['Fecha'].dt.date).size().mean()
+    promedio_cantidad_calculos_por_dia = round(promedio_cantidad_calculos_por_dia,0)
+    st.write(f"### Promedio de cantidad cálculos por dia: **{promedio_cantidad_calculos_por_dia}**")
 
     st.write("---")
 
@@ -167,7 +164,7 @@ if aux_contra == True :
     
     # GRAFICO DE CALCULOS POR DIA
 
-    plt.figure(figsize=(14, 8))  # Ajusta el tamaño de la figura
+    plt.figure(figsize=(12, 6))  # Ajusta el tamaño de la figura
     plt.plot(conteo_por_dia.index, conteo_por_dia.values, marker='o', linestyle='-', color='blue', linewidth=4)
     plt.grid(True)
     plt.title('Cantidad de cálculos por Día', fontsize=16)
@@ -175,7 +172,7 @@ if aux_contra == True :
     plt.gca().xaxis.set_major_formatter(date_format)
     plt.xticks(conteo_por_dia.index,rotation=45)
     plt.tight_layout()
-    st.pyplot(plt)
+    st.pyplot(plt, width=700)
     st.write("---")
     
     
