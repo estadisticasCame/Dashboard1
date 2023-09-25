@@ -164,7 +164,7 @@ if aux_contra == True :
     
     # GRAFICO DE CALCULOS POR DIA
 
-    plt.figure(figsize=(12, 6))  # Ajusta el tamaño de la figura
+    plt.figure(figsize=(14, 10))  # Ajusta el tamaño de la figura
     plt.plot(conteo_por_dia.index, conteo_por_dia.values, marker='o', linestyle='-', color='blue', linewidth=4)
     plt.grid(True)
     plt.title('Cantidad de cálculos por Día', fontsize=16)
@@ -172,7 +172,7 @@ if aux_contra == True :
     plt.gca().xaxis.set_major_formatter(date_format)
     plt.xticks(conteo_por_dia.index,rotation=45)
     plt.tight_layout()
-    st.pyplot(plt, width=700)
+    st.pyplot(plt)
     st.write("---")
     
     
