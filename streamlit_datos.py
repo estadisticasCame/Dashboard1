@@ -5,6 +5,13 @@ from io import BytesIO
 import github
 import io
 
+# Configuramos la página
+st.set_page_config(
+    page_title="Tablero de control/Calculadora Ahora 12",
+    page_icon="imgs/CAME-Transparente.ico.ico",
+    )
+
+
 st.title("Tablero de control")
 st.header("Estadísticas")
 st.write("Calculadora Ahora 12")
