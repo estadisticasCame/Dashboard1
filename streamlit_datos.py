@@ -6,6 +6,7 @@ import github
 import io
 import seaborn as sns
 import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
 
 
 # Configuramos la página
