@@ -17,8 +17,12 @@ def hide_password_input(input_label):
 def verificar_contraseña(contraseña):
     if contraseña == st.secrets["CONTRASEÑA"]:
         return True
-    else:
+    elif contraseña != st.secrets["CONTRASEÑA"]:
         return False
+    else:
+        pass
+        
+
 
 
 st.write("---")
