@@ -142,7 +142,7 @@ if aux_contra == True :
     plt.gca().xaxis.set_major_formatter(date_format)
     plt.xticks(conteo_por_dia.index,rotation=45)
     plt.tight_layout()
-    st.pyplot(fig)
+    st.pyplot(plt)
     st.write("---")
     
     
