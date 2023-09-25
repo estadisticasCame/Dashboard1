@@ -134,27 +134,15 @@ if aux_contra == True :
     # GRAFICO DE CALCULOS POR DIA
     # Agrupa los datos por día y cuenta la cantidad de registros en cada día
     conteo_por_dia = df.groupby(df['Fecha'].dt.date)['Fecha'].count()
-    
-    # Crea un gráfico de líneas
     plt.figure(figsize=(12, 6))  # Ajusta el tamaño de la figura
-    
-    # Personaliza el gráfico
     plt.plot(conteo_por_dia.index, conteo_por_dia.values, marker='o', linestyle='-', color='blue', linewidth=4)
-    
-    # Agrega una grilla
     plt.grid(True)
-    
     plt.title('Cantidad de cálculos por Día', fontsize=16)
-    # Formatea el eje x para mostrar las fechas en el formato dd/mm/aa
     date_format = mdates.DateFormatter("%d/%m/%y")
     plt.gca().xaxis.set_major_formatter(date_format)
-    
-    # Rota las etiquetas del eje x para una mejor legibilidad
     plt.xticks(conteo_por_dia.index,rotation=45)
-    
-    # Muestra el gráfico
     plt.tight_layout()
-    plt.show()
+    st.pyplot(fig)
     st.write("---")
     
     
