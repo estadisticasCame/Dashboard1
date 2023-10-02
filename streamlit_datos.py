@@ -161,6 +161,10 @@ if aux_contra == True :
     elif filtro_seleccionado == "Todos los días":
         conteo_por_dia =  conteo_por_dia
 
+    # Normalizamos los datos de ahora 3 y ahora 6
+    df.loc[df["Programa"] == "Ahora 3","Programa"] = "Ahora 03"
+    df.loc[df["Programa"] == "Ahora 6","Programa"] = "Ahora 06"
+
     
     # GRAFICO DE CALCULOS POR DIA
 
