@@ -83,7 +83,11 @@ if aux_contra == True :
     content_file = io.BytesIO(content_bytes)
     # Read the CSV from the file-like object
     df = pd.read_csv(content_file)   
-
+    
+    # Normalizamos los datos de ahora 3 y ahora 6
+    df.loc[df["Programa"] == "Ahora 3","Programa"] = "Ahora 03"
+    df.loc[df["Programa"] == "Ahora 6","Programa"] = "Ahora 06"
+    
     # Generamos las tablas
     columnas = ["Provincia", "Programa", "Tipo de inscripcion" ]
     lista_tablas = []
@@ -161,11 +165,6 @@ if aux_contra == True :
     elif filtro_seleccionado == "Todos los días":
         conteo_por_dia =  conteo_por_dia
 
-    # Normalizamos los datos de ahora 3 y ahora 6
-    df.loc[df["Programa"] == "Ahora 3","Programa"] = "Ahora 03"
-    df.loc[df["Programa"] == "Ahora 6","Programa"] = "Ahora 06"
-
-    
     # GRAFICO DE CALCULOS POR DIA
 
     plt.figure(figsize=(10, 8))  # Ajusta el tamaño de la figura
