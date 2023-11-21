@@ -91,7 +91,7 @@ if aux_contra == True :
     # Read the CSV from the file-like object
     df2 = pd.read_parquet(content_file)   
 
-    df = pd.concat([df1,df2],ignore_index=True)
+    df = pd.concat([df2,df1],ignore_index=True)
     
     # Normalizamos los datos de ahora 3 y ahora 6
     df.loc[df["Programa"] == "Ahora 3","Programa"] = "Ahora 03"
