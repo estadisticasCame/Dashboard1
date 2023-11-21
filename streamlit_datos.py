@@ -82,7 +82,16 @@ if aux_contra == True :
     content_bytes = contents.decoded_content
     content_file = io.BytesIO(content_bytes)
     # Read the CSV from the file-like object
-    df = pd.read_csv(content_file)   
+    df1 = pd.read_csv(content_file)  
+    
+    contents = repo.get_contents("Datos (primeros 13k comprimidos).parquet")
+    # Create a file-like object from the decoded content
+    content_bytes = contents.decoded_content
+    content_file = io.BytesIO(content_bytes)
+    # Read the CSV from the file-like object
+    df2 = pd.read_parquet(content_file)   
+
+    df = pd.concat([df1,df2],ignore_index=True)
     
     # Normalizamos los datos de ahora 3 y ahora 6
     df.loc[df["Programa"] == "Ahora 3","Programa"] = "Ahora 03"
