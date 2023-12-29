@@ -84,7 +84,7 @@ if aux_contra == True :
     # Read the CSV from the file-like object
     df1 = pd.read_csv(content_file)  
     
-    contents = repo.get_contents("Datos (primeros 13k comprimidos).parquet")
+    contents = repo.get_contents("CANTIDAD TOTAL DE REGISTROS.parquet")
     # Create a file-like object from the decoded content
     content_bytes = contents.decoded_content
     content_file = io.BytesIO(content_bytes)
