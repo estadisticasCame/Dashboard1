@@ -182,7 +182,7 @@ if aux_contra == True :
     plt.title('Cantidad de cálculos por Día', fontsize=16)
     date_format = mdates.DateFormatter("%d/%m/%y")
     plt.gca().xaxis.set_major_formatter(date_format)
-    plt.xticks(conteo_por_dia.index,rotation=45)
+    plt.xticks(conteo_por_dia.index,rotation=90)
     plt.tight_layout()
     st.pyplot(plt)
     st.write("---")
