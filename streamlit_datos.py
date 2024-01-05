@@ -200,6 +200,7 @@ if aux_contra == True :
     date_format = mdates.DateFormatter("%d/%m/%y")
     plt.gca().xaxis.set_major_formatter(date_format)
     plt.xticks(conteo_por_dia.index,rotation=90)
+    plt.gcf().autofmt_xdate()  # Ajusta automáticamente las etiquetas
     plt.tight_layout()
     st.pyplot(plt)
     st.write("---")
