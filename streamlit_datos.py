@@ -151,13 +151,13 @@ if aux_contra == True :
     calculos_por_fecha['Fecha'] = calculos_por_fecha['Fecha'].dt.strftime('%d/%m/%y')
     # Seleccionar filtro
     fechas = ["Últimos 5 días", "Últimos 10 días", "Últimos 15 días", "Todos los días"]
-    filtro_seleccionado2 = st.selectbox("Seleccione el filtro de fecha",fechas) 
+    filtro_seleccionado2 = st.selectbox("Seleccione el periodo",fechas) 
     if filtro_seleccionado2 == "Últimos 5 días":
-        calculos_por_fecha =  calculos_por_fecha.tail()
+        calculos_por_fecha =  calculos_por_fecha.head()
     elif filtro_seleccionado2 == "Últimos 10 días":
-        calculos_por_fecha =  calculos_por_fecha.tail(10)
+        calculos_por_fecha =  calculos_por_fecha.head(10)
     elif filtro_seleccionado2 == "Últimos 15 días":
-        calculos_por_fecha =  calculos_por_fecha.tail(15)
+        calculos_por_fecha =  calculos_por_fecha.head(15)
     elif filtro_seleccionado2 == "Todos los días":
         calculos_por_fecha =  calculos_por_fecha
         
