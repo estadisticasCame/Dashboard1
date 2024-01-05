@@ -191,7 +191,7 @@ if aux_contra == True :
     elif filtro_seleccionado == "Todos los días":
         conteo_por_dia =  conteo_por_dia
         # Saltear de 5 en 5
-        etiquetas_salteadas = range(0, len(conteo_por_dia.index), 5)
+        etiquetas_salteadas = range(0, len(conteo_por_dia.index), 10)
         nuevas_etiquetas = conteo_por_dia.index[etiquetas_salteadas]
 
     # GRAFICO DE CALCULOS POR DIA
