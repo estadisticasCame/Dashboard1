@@ -190,6 +190,9 @@ if aux_contra == True :
         conteo_por_dia =  conteo_por_dia.tail(15)
     elif filtro_seleccionado == "Todos los días":
         conteo_por_dia =  conteo_por_dia
+        # Saltear de 5 en 5
+        etiquetas_salteadas = range(0, len(conteo_por_dia.index), 5)
+        nuevas_etiquetas = conteo_por_dia.index[etiquetas_salteadas]
 
     # GRAFICO DE CALCULOS POR DIA
 
@@ -199,7 +202,10 @@ if aux_contra == True :
     plt.title('Cantidad de cálculos por Día', fontsize=16)
     date_format = mdates.DateFormatter("%d/%m/%y")
     plt.gca().xaxis.set_major_formatter(date_format)
-    plt.xticks(conteo_por_dia.index,rotation=90, ha='right')
+    if filtro_seleccionado == "Todos los días":
+        plt.xticks(nuevas_etiquetas,rotation=90, ha='right')
+    else:
+        plt.xticks(conteo_por_dia.index,rotation=90, ha='right')
     plt.gcf().autofmt_xdate()  # Ajusta automáticamente las etiquetas
     plt.tight_layout()
     st.pyplot(plt)
