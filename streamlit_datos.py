@@ -149,6 +149,15 @@ if aux_contra == True :
     calculos_por_fecha = df["Fecha"].value_counts().reset_index().rename(columns={'count': 'N'})
     calculos_por_fecha = calculos_por_fecha.sort_values(by="Fecha",ascending=False)
     calculos_por_fecha['Fecha'] = calculos_por_fecha['Fecha'].dt.strftime('%d/%m/%y')
+    if filtro_seleccionado == "Últimos 5 días":
+        calculos_por_fecha =  calculos_por_fecha.tail()
+    elif filtro_seleccionado == "Últimos 10 días":
+        calculos_por_fecha =  calculos_por_fecha.tail(10)
+    elif filtro_seleccionado == "Últimos 15 días":
+        calculos_por_fecha =  calculos_por_fecha.tail(15)
+    elif filtro_seleccionado == "Todos los días":
+        calculos_por_fecha =  calculos_por_fecha
+        
     calculos_por_fecha = calculos_por_fecha.to_html(index=False, escape = False)
     calculos_por_fecha = calculos_por_fecha.replace('<table border="1" class="dataframe">',
                                     '<table style="width: 100%; text-align: center;" border="1" class="dataframe">')
