@@ -34,8 +34,18 @@ def verificar_contraseña(contraseña):
         return False
     else:
         pass
-        
 
+@st.cache_data(persist=True)
+def cache_datos_completos (github_token, repo_name, file_path):
+    g = Github(github_token)
+    repo = g.get_repo(repo_name)
+    contents = repo.get_contents(file_path)
+    contents = repo.get_contents("CANTIDAD TOTAL DE REGISTROS.parquet")
+    # Create a file-like object from the decoded content
+    content_bytes = contents.decoded_content
+    content_file = io.BytesIO(content_bytes)
+    df2 = pd.read_parquet(content_file)   
+    return df2
 
 
 st.write("---")
@@ -84,12 +94,7 @@ if aux_contra == True :
     # Read the CSV from the file-like object
     df1 = pd.read_csv(content_file)  
     
-    contents = repo.get_contents("CANTIDAD TOTAL DE REGISTROS.parquet")
-    # Create a file-like object from the decoded content
-    content_bytes = contents.decoded_content
-    content_file = io.BytesIO(content_bytes)
-    # Read the CSV from the file-like object
-    df2 = pd.read_parquet(content_file)   
+    df2 = cache_datos_completos(github_token, repo_name, file_path)
 
     df = pd.concat([df2,df1],ignore_index=True)
     
