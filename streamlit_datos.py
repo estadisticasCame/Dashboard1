@@ -26,11 +26,11 @@ def hide_password_input(input_label):
 
 # Función para verificar la contraseña ingresada
 def verificar_contraseña(contraseña):
-    if contraseña == st.secrets["CONTRASEÑA"]:
+    if contraseña == st.secrets["CONTRASENIA"]:
         return True
     elif contraseña == "0" or contraseña == "" or contraseña == " ": 
         pass
-    elif contraseña != st.secrets["CONTRASEÑA"]:
+    elif contraseña != st.secrets["CONTRASENIA"]:
         return False
     else:
         pass
