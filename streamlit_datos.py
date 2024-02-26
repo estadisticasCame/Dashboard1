@@ -11,14 +11,14 @@ import matplotlib.dates as mdates
 
 # Configuramos la página
 st.set_page_config(
-    page_title="Tablero de control/Calculadora Ahora 12",
+    page_title="Tablero de control/Calculadora Cuota Simple",
     page_icon="imgs/CAME-Transparente.ico.ico",
     )
 
 
 st.title("Tablero de control")
 st.header("Estadísticas")
-st.write("Calculadora Ahora 12")
+st.write("Calculadora Cuota Simple")
 
 def hide_password_input(input_label):
     password = st.text_input(input_label, type="password", key=input_label)
@@ -35,17 +35,18 @@ def verificar_contraseña(contraseña):
     else:
         pass
 
-@st.cache_data(persist=True)
-def cache_datos_completos (github_token, repo_name, file_path):
-    g = Github(github_token)
-    repo = g.get_repo(repo_name)
-    contents = repo.get_contents(file_path)
-    contents = repo.get_contents("CANTIDAD TOTAL DE REGISTROS.parquet")
-    # Create a file-like object from the decoded content
-    content_bytes = contents.decoded_content
-    content_file = io.BytesIO(content_bytes)
-    df2 = pd.read_parquet(content_file)   
-    return df2
+# ESTÁ FUNCION ES PARA CUANDO HAYA MÁS DE 13K DE DATOS
+#@st.cache_data(persist=True)
+#def cache_datos_completos (github_token, repo_name, file_path):
+#    g = Github(github_token)
+#    repo = g.get_repo(repo_name)
+#    contents = repo.get_contents(file_path)
+#    contents = repo.get_contents("CANTIDAD TOTAL DE REGISTROS.parquet")
+#    # Create a file-like object from the decoded content
+#    content_bytes = contents.decoded_content
+#    content_file = io.BytesIO(content_bytes)
+#    df2 = pd.read_parquet(content_file)   
+#    return df2
 
 
 st.write("---")
@@ -84,34 +85,53 @@ if aux_contra == True :
         # ACCEDEMOS A LOS DATOS EN TIEMPO REAL
         github_token = st.secrets["TOKEN"] 
         repo_name = st.secrets["REPO"]
-        file_path = st.secrets["ARCHIVO"]   
             
         g = Github(github_token)
         repo = g.get_repo(repo_name)
-        contents = repo.get_contents(file_path)
+        contents = repo.get_contents(st.secrets["ARCHIVO_CALCULADORA"])
         # Create a file-like object from the decoded content
         content_bytes = contents.decoded_content
         content_file = io.BytesIO(content_bytes)
         # Read the CSV from the file-like object
-        df1 = pd.read_csv(content_file)  
+        calculos = pd.read_csv(content_file)  
         
-        df2 = cache_datos_completos(github_token, repo_name, file_path)
-    
-        df = pd.concat([df2,df1],ignore_index=True)
+        contents = repo.get_contents(st.secrets["ARCHIVO_CONSULTAS"])
+        # Create a file-like object from the decoded content
+        content_bytes = contents.decoded_content
+        content_file = io.BytesIO(content_bytes)
+        # Read the CSV from the file-like object
+        consultas = pd.read_csv(content_file)  
+
+        contents = repo.get_contents(st.secrets["ARCHIVO_CALIFICACION"]  )
+        # Create a file-like object from the decoded content
+        content_bytes = contents.decoded_content
+        content_file = io.BytesIO(content_bytes)
+        # Read the CSV from the file-like object
+        calificaciones = pd.read_csv(content_file)  
         
-        # Normalizamos los datos de ahora 3 y ahora 6
-        df.loc[df["Programa"] == "Ahora 3","Programa"] = "Ahora 03"
-        df.loc[df["Programa"] == "Ahora 6","Programa"] = "Ahora 06"
+        # Por si hay más datos (13k)
+        #df2 = cache_datos_completos(github_token, repo_name, file_path)
+        #df = pd.concat([df2,df1],ignore_index=True)
         
-        # Generamos las tablas
+        # Generamos las tablas para los CÁLCULOS
         columnas = ["Provincia", "Programa", "Tipo de inscripcion" ]
         lista_tablas = []
         for elemento in columnas :     
-            tabla = df[elemento].value_counts().reset_index().rename(columns={'count': 'N'})
+            tabla = calculos[elemento].value_counts().reset_index().rename(columns={'count': 'N'})
             tabla["%"] = (tabla["N"] / tabla["N"].sum())*100
             tabla.loc[len(tabla)] = ["Total",tabla["N"].sum(),tabla["%"].sum()]
             tabla['%'] = tabla['%'].apply(lambda x: f'{x:.2f}%')
             lista_tablas.append(tabla)
+
+        # Generamos las tablas para las calificaciones
+        columnas = ["Evaluación"]
+        lista_tablas2 = []
+        for elemento in columnas :     
+            tabla = calificaciones[elemento].value_counts().reset_index().rename(columns={'count': 'N'})
+            tabla["%"] = (tabla["N"] / tabla["N"].sum())*100
+            tabla.loc[len(tabla)] = ["Total",tabla["N"].sum(),tabla["%"].sum()]
+            tabla['%'] = tabla['%'].apply(lambda x: f'{x:.2f}%')
+            lista_tablas2.append(tabla)
         
     
         # DESCARGAR DATOS EN EXCEL
@@ -119,10 +139,14 @@ if aux_contra == True :
         def generar_excel():
             output = BytesIO()
             with pd.ExcelWriter(output, engine='openpyxl') as writer:
-                df.to_excel(writer, sheet_name='Base', index=False)
+                calculos.to_excel(writer, sheet_name='Base', index=False)
+                calificaciones.to_excel(writer, sheet_name='Base',  startcol=len(calculos.columns) + 2, index=False)
+                consultas.to_excel(writer, sheet_name='Base',  startcol=len(calculos.columns) + len(calificaciones.columns) + 2, index=False)
+
                 lista_tablas[0].to_excel(writer, sheet_name='Tablas', startrow=1, index=False)
                 lista_tablas[1].to_excel(writer, sheet_name='Tablas', startrow=len(lista_tablas[0]) + 6, index=False)
                 lista_tablas[2].to_excel(writer, sheet_name='Tablas', startrow=len(lista_tablas[0]) + 8 + len(lista_tablas[1]), index=False)
+                lista_tablas2[0].to_excel(writer, sheet_name='Tablas', startrow=len(lista_tablas[0]) + 8 + len(lista_tablas[1]), index=False,  startcol= len(lista_tablas[0].columns)+ 2)
             output.seek(0)
             return output
     
@@ -138,13 +162,13 @@ if aux_contra == True :
     
         st.write("---")
     
-        total_calculos = df.shape[0]
+        total_calculos = calculos.shape[0]
         st.write(f"### Cálculos totales: **{total_calculos}**")
     
         # Convertir la columna 'Fecha' al formato de fecha adecuado
-        df['Fecha'] = pd.to_datetime(df['Fecha'], format='%d/%m/%y')
+        calculos['Fecha'] = pd.to_datetime(calculos['Fecha'], format='%d/%m/%y')
         # Agrupar por día y contar la cantidad de filas en cada grupo
-        promedio_cantidad_calculos_por_dia = df.groupby(df['Fecha'].dt.date).size().mean()
+        promedio_cantidad_calculos_por_dia = calculos.groupby(calculos['Fecha'].dt.date).size().mean()
         promedio_cantidad_calculos_por_dia = round(promedio_cantidad_calculos_por_dia,0)
         st.write(f"### Promedio de cantidad cálculos por dia: **{promedio_cantidad_calculos_por_dia}**")
     
@@ -152,7 +176,7 @@ if aux_contra == True :
     
         # CALCULOS POR DIA 
         st.header("Cantidad de cálculos por día")
-        calculos_por_fecha = df["Fecha"].value_counts().reset_index().rename(columns={'count': 'N'})
+        calculos_por_fecha = calculos["Fecha"].value_counts().reset_index().rename(columns={'count': 'N'})
         calculos_por_fecha = calculos_por_fecha.sort_values(by="Fecha",ascending=False)
         calculos_por_fecha['Fecha'] = calculos_por_fecha['Fecha'].dt.strftime('%d/%m/%y')
         # Seleccionar filtro
@@ -177,7 +201,7 @@ if aux_contra == True :
         st.write("---")
         
         # Agrupa los datos por día y cuenta la cantidad de registros en cada día
-        conteo_por_dia = df.groupby(df['Fecha'].dt.date)['Fecha'].count()
+        conteo_por_dia = calculos.groupby(calculos['Fecha'].dt.date)['Fecha'].count()
         
         # Seleccionar filtro
         fechas = ["Últimos 5 días", "Últimos 10 días", "Últimos 15 días", "Todos los días"]
@@ -212,8 +236,25 @@ if aux_contra == True :
         st.pyplot(plt)
         st.write("---")
         
+
+        # CALIFICACIONES
+        st.header("Consultas")
+        st.dataframe(consultas)
         
-    
+
+
+
+        # CALIFICACIONES
+        st.header("Valoraciones de la calculadora")
+        calificaciones = lista_tablas2[0].to_html(index=False, escape = False)
+        calificaciones = calificaciones.replace('<table border="1" class="dataframe">',
+                                        '<table style="width: 100%; text-align: center;" border="1" class="dataframe">')
+        calificaciones = calificaciones.replace('<th>', '<th style="text-align: center; background-color: blue; color: white;">')
+        calificaciones = calificaciones.replace(f'<tr>\n      <td>Total</td>\n      <td>{len(lista_tablas2[0])}</td>\n      <td>100.00%</td>\n    </tr>',
+                                        f'<tr>\n      <td style="text-align: center; font-weight: bold;">Total</td>\n      <td style="text-align: center; font-weight: bold;">{len(lista_tablas2[0])}</td>\n      <td style="text-align: center; font-weight: bold;">100.00</td>\n    </tr>')
+        st.write(calificaciones, unsafe_allow_html=True)
+        st.write("---")
+
         # PROVINCIA
         st.header("Cantidad de cálculos por provincia")
         calculos_por_provincia = lista_tablas[0].to_html(index=False, escape = False)
@@ -246,3 +287,5 @@ if aux_contra == True :
                                         f'<tr>\n      <td style="text-align: center; font-weight: bold;">Total</td>\n      <td style="text-align: center; font-weight: bold;">{total_calculos}</td>\n      <td style="text-align: center; font-weight: bold;">100.00</td>\n    </tr>')
         st.write(calculos_por_tipo_inscripcion, unsafe_allow_html=True)
         st.write("---")
+
+
