@@ -141,12 +141,12 @@ if aux_contra == True :
             with pd.ExcelWriter(output, engine='openpyxl') as writer:
                 calculos.to_excel(writer, sheet_name='Base', index=False)
                 calificaciones.to_excel(writer, sheet_name='Base',  startcol=len(calculos.columns) + 2, index=False)
-                consultas.to_excel(writer, sheet_name='Base',  startcol=len(calculos.columns) + len(calificaciones.columns) + 2, index=False)
+                consultas.to_excel(writer, sheet_name='Base',  startcol=len(calculos.columns) + len(calificaciones.columns) + 4, index=False)
 
                 lista_tablas[0].to_excel(writer, sheet_name='Tablas', startrow=1, index=False)
                 lista_tablas[1].to_excel(writer, sheet_name='Tablas', startrow=len(lista_tablas[0]) + 6, index=False)
                 lista_tablas[2].to_excel(writer, sheet_name='Tablas', startrow=len(lista_tablas[0]) + 8 + len(lista_tablas[1]), index=False)
-                lista_tablas2[0].to_excel(writer, sheet_name='Tablas', startrow=len(lista_tablas[0]) + 8 + len(lista_tablas[1]), index=False,  startcol= len(lista_tablas[0].columns)+ 2)
+                lista_tablas2[0].to_excel(writer, sheet_name='Tablas', index=False,  startcol= len(lista_tablas[0].columns)+ 2)
             output.seek(0)
             return output
     
