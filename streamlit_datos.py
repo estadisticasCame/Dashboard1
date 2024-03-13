@@ -22,7 +22,7 @@ st.write("Calculadora Cuota Simple")
 
 @st.cache
 def cargar_datos():
-    datos_almacenados = pd.read_parquet("Datos almacenados/PRIMEROS 6000 DATOS.PARQUET")
+    datos_almacenados = pd.read_parquet("Datos almacenados/PRIMEROS 6000 DATOS.parquet")
     return datos_almacenados
     
 datitos = cargar_datos()
