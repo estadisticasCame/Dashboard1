@@ -20,6 +20,11 @@ st.title("Tablero de control")
 st.header("Estadísticas")
 st.write("Calculadora Cuota Simple")
 
+@st.cache
+def cargar_datos():
+    datos_almacenados = pd.read_parquet("Datos almacenados/PRIMEROS 6000 DATOS.PARQUET")
+    return datos_almacenados
+    
 def hide_password_input(input_label):
     password = st.text_input(input_label, type="password", key=input_label)
     return password
@@ -94,6 +99,10 @@ if aux_contra == True :
         content_file = io.BytesIO(content_bytes)
         # Read the CSV from the file-like object
         calculos = pd.read_csv(content_file)  
+        # CALCULOS ANTERIORES
+        datos_almacenados = cargar_datos()
+        # CONCATENAMOS
+        calculos = pd.concat([calculos,datos_almacenados])
         
         contents = repo.get_contents(st.secrets["ARCHIVO_CONSULTAS"])
         # Create a file-like object from the decoded content
