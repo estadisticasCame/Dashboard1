@@ -26,7 +26,7 @@ def cargar_datos():
     return datos_almacenados
     
 datitos = cargar_datos()
-st.datafame(datitos)   
+st.write(datitos)   
 
 def hide_password_input(input_label):
     password = st.text_input(input_label, type="password", key=input_label)
