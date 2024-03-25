@@ -20,7 +20,7 @@ st.title("Tablero de control")
 st.header("Estadísticas")
 st.write("Calculadora Cuota Simple")
 
-st.cache_data
+@st.cache_data
 def cargar_datos():
     datos_almacenados = pd.read_parquet("Datos almacenados/PRIMEROS 6000 DATOS.parquet")
     return datos_almacenados
