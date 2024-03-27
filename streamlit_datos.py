@@ -22,7 +22,7 @@ st.write("Calculadora Cuota Simple")
 
 @st.cache_data
 def cargar_datos():
-    datos_almacenados = pd.read_parquet("Datos almacenados/PRIMEROS 6000 DATOS.parquet")
+    datos_almacenados = pd.read_parquet("Datos almacenados/datos almacenados.parquet")
     return datos_almacenados
     
 def hide_password_input(input_label):
