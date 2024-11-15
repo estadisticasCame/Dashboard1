@@ -58,7 +58,7 @@ st.write("---")
 
 colA, colB = st.columns([1,2])
 with colA :
-    st.image("imgs/CAME-Transparente.png", use_column_width=True, width=600)
+    st.image("imgs/CAME-Transparente.png", use_container_width=True, width=600)
 # Imagen común a todas las páginas ya que esta por fuera de las funciones
 with colB : 
     contraseña = hide_password_input("Ingrese la contraseña:")
